@@ -69,6 +69,10 @@ When the user asks for a practice session, even with a minimal request such as �
 - Pronunciation audio is supplementary and must only appear after the learner has answered the current exercise, so it can never reveal a hidden target. There is no TTS fallback; a word without a real recording gets no audio button.
 - Every generated session should include `suggestedWords`: a small set of useful vocabulary to consider learning next. Suggestions should expand what the learner can say with current weak/active vocabulary, not merely provide synonyms. Prefer high-frequency words, connectors, nouns and verbs that combine naturally with session targets, and prefer words absent from the latest CSV. Include a short natural Danish example and a short learner-language translation. Do not automatically add suggestions to Ordly.
 - Scale suggestion count with session size rather than using a fixed number: roughly 3 for very short sessions, 4–6 for normal 15–25 exercise sessions, 6–10 for longer sessions, and never more than 20 unless explicitly requested.
+- Completed exercises are adaptive-learning evidence. Every materially new session gets a stable UUID `evidenceSessionId`. Copy `entry_id` values for assessed vocabulary from the latest CSV into `entryIdByWord`, and tag each exercise with `evidenceWords` and `evidenceSkill` so only genuinely assessed words receive evidence.
+- Keep `focusWords` and `evidenceWords` distinct. `focusWords` can include contextual/supporting vocabulary for summaries and audio; `evidenceWords` must contain only words whose knowledge the answer actually tests.
+- Evidence sync writes append-only rows to Ordly's existing Supabase `practice_attempts` table. Choice-supported interactions use `assistance: choices`; typed recall uses `assistance: none`; reveal/self-rating uses `assistance: model`. This evidence must not directly mutate review cards or mastery.
+- When analysing future CSVs, use `practice_history_json`, exercise kind, skill/objective, result and assistance. A correct supported choice is weaker evidence than correct unaided typed production; do not treat them as equivalent mastery signals.
 
 ## Visual design
 
@@ -94,7 +98,7 @@ Shared styling lives in `src/styles.css`. A generated practice session should al
 : Canonical latest learner statistics exported automatically from the main Ordly app. Read this fresh before every generated practice session.
 
 `src/session/currentSession.ts`
-: The generated session. This is the file that should change most often. Include `audioByWord` entries copied from the latest CSV for vocabulary used in the session when `audio_path` is available, plus `suggestedWords` for related vocabulary shown after completion.
+: The generated session. This is the file that should change most often. Include `audioByWord` entries copied from the latest CSV for vocabulary used in the session when `audio_path` is available, `suggestedWords` for related vocabulary shown after completion, and evidence metadata for adaptive practice (`evidenceSessionId`, `entryIdByWord`, `evidenceWords`, `evidenceSkill`).
 
 `src/types.ts`
 : Schema for every supported exercise type.
