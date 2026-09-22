@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ChevronRight, RotateCcw } from 'lucide-react'
 import { currentSession } from './session/currentSession'
 import { blankProgress, clearProgress, loadProgress, saveProgress } from './storage/progress'
@@ -6,13 +6,33 @@ import type { ExerciseResult, SessionProgress } from './types'
 import { ExerciseRenderer } from './exercises/ExerciseRenderer'
 import { PrimaryButton } from './components/PrimaryButton'
 import { PronunciationAudio } from './components/PronunciationAudio'
+import { flushPracticeEvidence, queueExerciseEvidence } from './evidence/practiceEvidence'
+import { supabase } from './lib/supabase'
 
 export default function App() {
   const [progress, setProgress] = useState<SessionProgress>(() => loadProgress(currentSession))
+  const exerciseStartedAtRef = useRef(Date.now())
+  const completionGuardRef = useRef(new Set(
+    Object.entries(progress.results)
+      .filter(([, result]) => result.completed)
+      .map(([id]) => id),
+  ))
 
   useEffect(() => { saveProgress(progress) }, [progress])
 
+  useEffect(() => {
+    void flushPracticeEvidence()
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) void flushPracticeEvidence()
+    })
+    return () => data.subscription.unsubscribe()
+  }, [])
+
   const exercise = currentSession.exercises[progress.currentIndex]
+
+  useEffect(() => {
+    exerciseStartedAtRef.current = Date.now()
+  }, [exercise?.id])
   const doneCount = Object.values(progress.results).filter((r) => r.completed).length
   const percent = currentSession.exercises.length ? (doneCount / currentSession.exercises.length) * 100 : 0
 
@@ -31,6 +51,12 @@ export default function App() {
   }
 
   function complete(correct: boolean, response?: unknown) {
+    if (completionGuardRef.current.has(exercise.id)) return
+    completionGuardRef.current.add(exercise.id)
+
+    queueExerciseEvidence(currentSession, exercise, correct, Date.now() - exerciseStartedAtRef.current)
+    void flushPracticeEvidence()
+
     setProgress((prev) => {
       const old = prev.results[exercise.id]
       const result: ExerciseResult = {
@@ -55,6 +81,7 @@ export default function App() {
   function reset() {
     if (!window.confirm('Reset this practice session and erase saved progress?')) return
     clearProgress(currentSession)
+    completionGuardRef.current.clear()
     setProgress(blankProgress(currentSession))
   }
 
@@ -106,7 +133,11 @@ export default function App() {
               </div>
             </div>
           )}
-          <PrimaryButton onClick={() => { clearProgress(currentSession); setProgress(blankProgress(currentSession)) }}>
+          <PrimaryButton onClick={() => {
+            clearProgress(currentSession)
+            completionGuardRef.current.clear()
+            setProgress(blankProgress(currentSession))
+          }}>
             Start a fresh round
           </PrimaryButton>
         </section>
