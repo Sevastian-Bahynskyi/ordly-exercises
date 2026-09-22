@@ -5,6 +5,17 @@ export const currentSession: PracticeSession = {
   title: 'A2 Danish practice',
   subtitle: '5 short exercises with longer sentences, clause structure, and active use of fragile vocabulary.',
   level: 'A2',
+  evidenceSessionId: '6d6f7c37-f860-4c8a-a81e-202609220001',
+  entryIdByWord: {
+    'nødvendig': 'a48286b1-3397-43b4-902f-4db06c5938d1',
+    'synes': '57dcb4cf-c242-4f18-8f6f-d1bd1881e6e4',
+    'besøge': 'fc11eeec-ba4a-4c1f-9391-b79052d5f79d',
+    'forklare': 'a45a75e0-5686-48a5-935d-c58eb1532267',
+    'nogensinde': 'd902eb17-1cb5-4f87-9975-f8e2f134bd96',
+    'skulle': 'eb2d5f3a-60c0-4af0-b0c1-b0344e17112f',
+    'afhænge': 'c26c9943-f4e6-4fee-9639-3813b5fa8269',
+    'af': '52cb2c7a-3b0f-4e05-8adf-2a1c7ca78778',
+  },
   audioByWord: {
     'nødvendig': 'words/noedvendig-01ea4502.mp3',
     'synes': 'words/synes-7721484b.mp3',
@@ -52,6 +63,8 @@ export const currentSession: PracticeSession = {
         'koldt': 'холодно',
       },
       focusWords: ['nødvendig', 'synes'],
+      evidenceWords: ['nødvendig'],
+      evidenceSkill: 'grammar',
       explanation: 'After “det er”, the adjective uses the neuter form: nødvendigt.',
     },
     {
@@ -62,6 +75,8 @@ export const currentSession: PracticeSession = {
       tokens: ['fordi', 'hun', 'har', 'brug', 'for', 'hjælp.', 'Jeg', 'besøger', 'min', 'bedstemor,'],
       answer: ['Jeg', 'besøger', 'min', 'bedstemor,', 'fordi', 'hun', 'har', 'brug', 'for', 'hjælp.'],
       focusWords: ['besøge'],
+      evidenceWords: ['besøge'],
+      evidenceSkill: 'word-order',
       explanation: 'After fordi, the subject still comes before the verb: fordi hun har brug for hjælp.',
     },
     {
@@ -81,6 +96,8 @@ export const currentSession: PracticeSession = {
         'flyttet': 'перенесена',
       },
       focusWords: ['forklare'],
+      evidenceWords: ['forklare'],
+      evidenceSkill: 'communication',
       explanation: 'forklare is the natural verb when you ask someone to explain something.',
     },
     {
@@ -95,6 +112,8 @@ export const currentSession: PracticeSession = {
       placeholder: 'Har du …',
       answerLabel: 'Answer',
       focusWords: ['nogensinde', 'skulle'],
+      evidenceWords: ['nogensinde', 'skulle'],
+      evidenceSkill: 'production',
       explanation: 'Har du nogensinde skullet … combines “ever” with the perfect form of skulle.',
     },
     {
@@ -109,6 +128,8 @@ export const currentSession: PracticeSession = {
         'tid': 'время',
       },
       focusWords: ['afhænge', 'af'],
+      evidenceWords: ['afhænge', 'af'],
+      evidenceSkill: 'collocation',
       explanation: 'The fixed expression is “det afhænger af …”.',
     },
   ],
