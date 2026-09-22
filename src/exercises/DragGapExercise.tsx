@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { DndContext, PointerSensor, useDraggable, useDroppable, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { ExerciseFrame } from '../components/ExerciseFrame'
@@ -5,6 +6,7 @@ import { Feedback } from '../components/Feedback'
 import { GlossText } from '../components/GlossText'
 import type { DragGapExercise as T } from '../types'
 import type { ExerciseProps } from './common'
+import { shuffleDifferent } from '../utils/shuffle'
 
 type Draft = { selected?: string }
 
@@ -34,6 +36,7 @@ function Gap({ selected, active }: { selected?: string; active: boolean }) {
 export function DragGapExercise({ exercise, draft, result, onDraftChange, onComplete }: ExerciseProps<T, Draft>) {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
   const selected = result?.completed ? (result.response as string) : draft?.selected
+  const optionOrder = useMemo(() => shuffleDifferent(exercise.options), [exercise])
 
   function submit(value: string) {
     if (result?.completed) return
@@ -55,7 +58,7 @@ export function DragGapExercise({ exercise, draft, result, onDraftChange, onComp
           <span><GlossText text={exercise.after} glosses={exercise.glosses} /></span>
         </div>
         <div className="token-bank">
-          {exercise.options.map((option) => (
+          {optionOrder.map((option) => (
             <DragToken key={option} value={option} disabled={result?.completed} onTap={() => onDraftChange({ selected: option })} />
           ))}
         </div>
