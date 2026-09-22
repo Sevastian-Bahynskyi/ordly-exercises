@@ -20,11 +20,13 @@ export const currentSession: PracticeSession = {
     {
       id: 'choice-kun', type: 'choice', title: 'Choose the right word',
       prompt: 'Jeg har ___ ti minutter.', options: ['kun','lige','hvor'], answer: 'kun',
+      glosses: { minutter: 'минуты' },
       focusWords: ['kun'], explanation: 'Jeg har kun ti minutter. = У меня только десять минут.',
     },
     {
       id: 'drag-faa', type: 'drag-gap', title: 'Complete the sentence',
       before: 'Jeg', after: 'en besked.', options: ['får','slår','besøger'], answer: 'får',
+      glosses: { besked: 'сообщение' },
       focusWords: ['få'], explanation: 'Jeg får en besked. = Я получаю сообщение.',
     },
     {
@@ -35,11 +37,13 @@ export const currentSession: PracticeSession = {
     {
       id: 'binary-bange', type: 'binary', title: 'True or false?',
       statement: '“Jeg er bange for hunde.” means “Я боюсь собак.”', correct: true,
+      glosses: { hunde: 'собаки' },
       focusWords: ['bange'], explanation: 'The useful pattern is: være bange for + something.',
     },
     {
       id: 'dialogue-sige', type: 'dialogue', title: 'Choose the reply',
       speakerA: 'Undskyld, jeg forstår ikke.', speakerBPrompt: 'What should you say?',
+      glosses: { Undskyld: 'извини / извините', forstår: 'понимаю', ikke: 'не' },
       options: ['Kan du sige det igen?','Hvor bor du?','Jeg er bange.'], answer: 'Kan du sige det igen?',
       focusWords: ['sige'], explanation: 'Kan du sige det igen? = Можешь сказать это ещё раз?',
     },
@@ -96,6 +100,7 @@ export const currentSession: PracticeSession = {
     {
       id: 'drag-sig', type: 'drag-gap', title: 'Complete the sentence',
       before: 'Han vasker', after: '.', options: ['sig','sin','hun'], answer: 'sig',
+      glosses: { vasker: 'моет / умывается' },
       focusWords: ['sig'], explanation: 'Han vasker sig. = Он моется.',
     },
     {
@@ -106,6 +111,7 @@ export const currentSession: PracticeSession = {
     {
       id: 'choice-lige', type: 'choice', title: 'Choose the right word',
       prompt: 'Jeg er ___ kommet hjem. (Я только что пришёл домой.)', options: ['lige','kun','hvor'], answer: 'lige',
+      glosses: { kommet: 'пришёл / приехал', hjem: 'домой' },
       focusWords: ['lige'], explanation: 'lige can mean “just / just now” in this context.',
     },
     {
@@ -116,6 +122,7 @@ export const currentSession: PracticeSession = {
     {
       id: 'type-nogensinde', type: 'type', title: 'Complete the question',
       prompt: 'Har du ___ set en hval?', accepted: ['nogensinde'], placeholder: 'one word',
+      glosses: { set: 'видел', hval: 'кит' },
       focusWords: ['nogensinde'], answerLabel: 'Answer', explanation: 'Har du nogensinde …? = Have you ever …?',
     },
     {
@@ -126,6 +133,7 @@ export const currentSession: PracticeSession = {
     {
       id: 'dialogue-besoeg', type: 'dialogue', title: 'Choose what fits',
       speakerA: 'Hvad laver du i weekenden?', speakerBPrompt: 'You want to say you visit your friend.',
+      glosses: { laver: 'делаешь', weekenden: 'выходные' },
       options: ['Jeg besøger min ven.','Jeg får min ven.','Jeg slår min ven.'], answer: 'Jeg besøger min ven.',
       focusWords: ['besøge'], explanation: 'besøge = to visit.',
     },
