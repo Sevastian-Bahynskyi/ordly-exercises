@@ -18,6 +18,12 @@ export type BaseExercise = {
   instruction?: string
   focusWords?: string[]
   explanation?: string
+  /**
+   * Supporting-word translations shown only when the learner taps a word.
+   * Never include the current answer/target here when that would reveal it.
+   * Keys should match the visible Danish form, e.g. { besked: 'сообщение' }.
+   */
+  glosses?: Record<string, string>
 }
 
 export type ChoiceExercise = BaseExercise & {
