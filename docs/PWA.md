@@ -11,7 +11,7 @@ Ordly Exercises is configured as a standalone Progressive Web App.
 - Apple Home Screen icon: `public/icons/icon-180.png`
 - PWA icons: `public/icons/icon-192.png` and `public/icons/icon-512.png`
 
-The icon source is the Danish practice flashcard/speech-bubble artwork generated for this project. Keep the icon consistent across Apple touch icons, manifest icons and favicons.
+The icon source is `public/icon.svg`, using the Danish æ flashcard/speech-bubble artwork generated for this project. `scripts/generate-icons.mjs` renders the required PNG sizes during every build. Keep this visual identity consistent across Apple touch icons, manifest icons and favicons.
 
 ## iPhone
 
