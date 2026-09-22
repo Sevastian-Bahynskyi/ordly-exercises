@@ -3,6 +3,7 @@ import { ExerciseFrame } from '../components/ExerciseFrame'
 import { Feedback } from '../components/Feedback'
 import type { MatchExercise as T } from '../types'
 import type { ExerciseProps } from './common'
+import { derange } from '../utils/shuffle'
 
 type Draft = { selected?: string; matched: string[]; mistakes: number; rightOrder: string[] }
 
@@ -11,7 +12,7 @@ export function MatchExercise({ exercise, draft, result, onDraftChange, onComple
     selected: undefined,
     matched: [],
     mistakes: 0,
-    rightOrder: [...exercise.pairs.map((p) => p.right)].sort(() => Math.random() - 0.5),
+    rightOrder: derange(exercise.pairs.map((p) => p.right)),
   }), [exercise])
   const state = draft ?? initial
   const [flash, setFlash] = useState(false)
