@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { RotateCcw } from 'lucide-react'
+import { ChevronRight, RotateCcw } from 'lucide-react'
 import { currentSession } from './session/currentSession'
 import { blankProgress, clearProgress, loadProgress, saveProgress } from './storage/progress'
 import type { ExerciseResult, SessionProgress } from './types'
@@ -47,6 +47,7 @@ export default function App() {
       if (prev.currentIndex >= currentSession.exercises.length - 1) return { ...prev, completed: true }
       return { ...prev, currentIndex: prev.currentIndex + 1 }
     })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function reset() {
@@ -60,8 +61,17 @@ export default function App() {
     const score = Math.round((correct / currentSession.exercises.length) * 100)
     return (
       <main className="app-shell">
-        <header className="topbar"><div><strong>Ordly Exercises</strong><span>{currentSession.level} · progress saved</span></div><button className="icon-button" onClick={reset} aria-label="Reset"><RotateCcw size={19}/></button></header>
-        <section className="summary-card">
+        <header className="glass-toolbar">
+          <div className="toolbar-brand">
+            <strong>Ordly</strong>
+            <span>Practice</span>
+          </div>
+          <button className="glass-icon-button" onClick={reset} aria-label="Reset practice">
+            <RotateCcw size={18} strokeWidth={2.1} />
+          </button>
+        </header>
+
+        <section className="summary-card session-enter">
           <div className="exercise-badge">Session complete</div>
           <div className="summary-score">{score}%</div>
           <p>{correct} of {currentSession.exercises.length} exercises completed without a mistake.</p>
@@ -71,36 +81,74 @@ export default function App() {
               {(weakWords.length ? weakWords : ['No weak words this round']).map((word) => <span className="tag" key={word}>{word}</span>)}
             </div>
           </div>
-          <PrimaryButton onClick={() => { clearProgress(currentSession); setProgress(blankProgress(currentSession)) }}>Start a fresh round</PrimaryButton>
+          <PrimaryButton onClick={() => { clearProgress(currentSession); setProgress(blankProgress(currentSession)) }}>
+            Start a fresh round
+          </PrimaryButton>
         </section>
       </main>
     )
   }
 
   const currentResult = progress.results[exercise.id]
+
   return (
     <main className="app-shell">
-      <header className="topbar">
-        <div><strong>Ordly Exercises</strong><span>{currentSession.level} · progress saved</span></div>
-        <button className="icon-button" onClick={reset} aria-label="Reset practice"><RotateCcw size={19}/></button>
+      <header className="glass-toolbar">
+        <div className="toolbar-brand">
+          <strong>Ordly</strong>
+          <span>Practice</span>
+        </div>
+        <div className="toolbar-status">{currentSession.level}</div>
+        <button className="glass-icon-button" onClick={reset} aria-label="Reset practice">
+          <RotateCcw size={18} strokeWidth={2.1} />
+        </button>
       </header>
 
-      <div className="session-meta">
-        <div><strong>{currentSession.title}</strong><span>{currentSession.subtitle}</span></div>
-        <span>{progress.currentIndex + 1} / {currentSession.exercises.length}</span>
+      <section className="session-hero">
+        <div className="session-kicker">Today</div>
+        <div className="session-heading-row">
+          <div>
+            <h2>{currentSession.title}</h2>
+            <p>{currentSession.subtitle}</p>
+          </div>
+          <div className="step-counter" aria-label={`Exercise ${progress.currentIndex + 1} of ${currentSession.exercises.length}`}>
+            <strong>{progress.currentIndex + 1}</strong>
+            <span>/ {currentSession.exercises.length}</span>
+          </div>
+        </div>
+      </section>
+
+      <div
+        className="progress-track"
+        role="progressbar"
+        aria-label="Session progress"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(percent)}
+      >
+        <div className="progress-fill" style={{ width: `${Math.max(3, percent)}%` }} />
       </div>
-      <div className="progress-track"><div className="progress-fill" style={{ width: `${Math.max(3, percent)}%` }} /></div>
 
-      <ExerciseRenderer
-        exercise={exercise}
-        draft={progress.drafts[exercise.id]}
-        result={currentResult}
-        onDraftChange={setDraft}
-        onComplete={complete}
-      />
+      <div className="exercise-stage" key={exercise.id}>
+        <ExerciseRenderer
+          exercise={exercise}
+          draft={progress.drafts[exercise.id]}
+          result={currentResult}
+          onDraftChange={setDraft}
+          onComplete={complete}
+        />
+      </div>
 
-      {currentResult?.completed && <PrimaryButton className="next-button" onClick={next}>{progress.currentIndex === currentSession.exercises.length - 1 ? 'See result' : 'Next'}</PrimaryButton>}
-      <div className="storage-note">Your progress is stored in this browser on this device.</div>
+      {currentResult?.completed && (
+        <div className="next-action">
+          <PrimaryButton className="next-button" onClick={next}>
+            <span>{progress.currentIndex === currentSession.exercises.length - 1 ? 'See result' : 'Continue'}</span>
+            <ChevronRight size={19} strokeWidth={2.25} />
+          </PrimaryButton>
+        </div>
+      )}
+
+      <div className="storage-note">Progress saves automatically on this iPhone.</div>
     </main>
   )
 }
