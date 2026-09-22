@@ -41,7 +41,8 @@ For every request to create or regenerate a practice session:
    - tap-to-translate glosses for potentially unknown supporting vocabulary;
    - never gloss the current target/answer before submission when that would reveal it;
    - concise immediate feedback;
-   - no listening exercises or browser/device text-to-speech; real per-word recordings referenced by `audio_path` may be used only as supplementary pronunciation playback once secure Supabase access is implemented.
+   - no listening exercises or browser/device text-to-speech;
+   - copy available `audio_path` values for vocabulary used in the session into `currentSession.audioByWord`; real recordings are offered only after an exercise is answered through authenticated access to the private Supabase `word-audio` bucket.
 9. Replace `src/session/currentSession.ts` with the newly generated session and assign a new unique `session.id`.
 10. Reuse the existing UI/components unless a genuinely new learning interaction is needed.
 11. Commit the changes to `main`.
