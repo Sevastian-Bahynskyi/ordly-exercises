@@ -6,12 +6,17 @@ This repository is intentionally independent from `Sevastian-Bahynskyi/ordly`. O
 
 ## Workflow
 
-1. The learner sends ChatGPT an updated Ordly export or describes what should be practised.
-2. ChatGPT analyses weak, due, new and already-strong vocabulary.
-3. ChatGPT regenerates `src/session/currentSession.ts` using reusable exercise components.
-4. Changes are pushed to `main`.
-5. GitHub Pages deploys the app at one stable URL.
-6. Session progress persists in browser `localStorage` on the same device/browser.
+This repo is intended to be operated directly from **ChatGPT browser chat**. Local Codex/IDE use is not part of the normal workflow.
+
+1. The learner uploads a fresh Ordly CSV export in ChatGPT and asks for a number/type of exercises.
+2. ChatGPT analyses weak, due, new and already-strong vocabulary from the export.
+3. ChatGPT designs a varied session at the learner's current level, A1 by default.
+4. ChatGPT regenerates `src/session/currentSession.ts`, reusing the permanent exercise engine and components.
+5. ChatGPT commits the changes to `main`.
+6. GitHub Pages republishes the same stable URL.
+7. Session progress persists in browser `localStorage` on the same device/browser.
+
+Supporting Danish words that may be unfamiliar should receive tap-to-translate glosses. The learner can tap an underlined word in context to see a small translation without leaving the exercise. Glosses must never reveal the answer currently being tested.
 
 Intended public URL:
 
