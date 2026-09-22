@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { DndContext, PointerSensor, closestCenter, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
 import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -6,6 +7,7 @@ import { Feedback } from '../components/Feedback'
 import { PrimaryButton } from '../components/PrimaryButton'
 import type { OrderExercise as T } from '../types'
 import type { ExerciseProps } from './common'
+import { shuffleDifferent } from '../utils/shuffle'
 
 type Token = { id: string; text: string }
 type Draft = { bank: Token[]; built: Token[] }
@@ -28,10 +30,10 @@ function SortableToken({ token, disabled, onTap }: { token: Token; disabled?: bo
 
 export function OrderExercise({ exercise, draft, result, onDraftChange, onComplete }: ExerciseProps<T, Draft>) {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
-  const initial: Draft = {
-    bank: exercise.tokens.map((text, index) => ({ id: `${exercise.id}-${index}`, text })),
+  const initial = useMemo<Draft>(() => ({
+    bank: shuffleDifferent(exercise.tokens.map((text, index) => ({ id: `${exercise.id}-${index}`, text }))),
     built: [],
-  }
+  }), [exercise])
   const state = draft ?? initial
 
   function moveToBuilt(token: Token) {
