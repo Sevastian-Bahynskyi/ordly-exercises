@@ -5,6 +5,7 @@ import { blankProgress, clearProgress, loadProgress, saveProgress } from './stor
 import type { ExerciseResult, SessionProgress } from './types'
 import { ExerciseRenderer } from './exercises/ExerciseRenderer'
 import { PrimaryButton } from './components/PrimaryButton'
+import { PronunciationAudio } from './components/PronunciationAudio'
 
 export default function App() {
   const [progress, setProgress] = useState<SessionProgress>(() => loadProgress(currentSession))
@@ -139,6 +140,13 @@ export default function App() {
           onComplete={complete}
         />
       </div>
+
+      {currentResult?.completed && (
+        <PronunciationAudio
+          words={exercise.focusWords}
+          audioByWord={currentSession.audioByWord}
+        />
+      )}
 
       {currentResult?.completed && (
         <div className="next-action">
