@@ -45,7 +45,7 @@ When the user asks for a practice session, even with a minimal request such as �
 
 - iPhone-first. Every exercise must work well at 320–430 CSS px and with touch only.
 - Keep touch targets around 44 px or larger.
-- Dragging must always have a tap-based alternative because touch dragging can be awkward or inaccessible.
+- Dragging must always have a tap-based alternative because touch dragging can be awkward or inaccessible. For `drag-gap`, tapping an option is a complete answer and must submit immediately; never show a tapped word inside the gap while still waiting for a second confirmation tap.
 - Keep A1 text short and literal. Avoid hiding the answer in labels such as “focus: WORD”.
 - Do not show the target answer before the learner responds unless the exercise is explicitly a reveal/flashcard exercise.
 - Randomise every unordered answer bank at runtime. Do not rely on the order written in `currentSession.ts`; correct answers must not acquire a predictable position across generated sessions.
@@ -57,6 +57,7 @@ When the user asks for a practice session, even with a minimal request such as �
 - Use Russian glosses where useful for this learner, but do not make every exercise Danish → Russian translation.
 - Assume supporting vocabulary can be unknown even in an A1 sentence. Add `glosses` for potentially unfamiliar supporting Danish words so the learner can tap them for a small translation tooltip.
 - Glosses are assistance, not answer keys. **Never gloss the target word, blank answer, or decisive answer option before submission if the translation would reveal the answer.**
+- An open gloss tooltip must dismiss when the learner taps anywhere else, not only when they tap the same word again.
 - Prefer glossing concrete supporting content words (nouns, verbs, adjectives, useful phrases) that are not clearly mastered according to the uploaded CSV. Do not clutter every sentence with translations for obvious function words.
 - If a supporting word is outside the uploaded Ordly vocabulary, do not assume the learner knows it merely because it is common. Add a gloss when it matters for understanding the exercise.
 - Give immediate, concise feedback.
@@ -79,6 +80,7 @@ The practice surface should feel native to modern iPhone and visually close to A
 - Prefer clear content surfaces. Use translucent/glass treatment mainly for navigation and lightweight controls.
 - Use generous whitespace, subtle hairlines, soft depth and large rounded geometry.
 - Controls must feel familiar and remain at least ~44 CSS px on touch devices.
+- The installed/mobile practice surface intentionally disables browser pinch/double-tap zoom; keep the viewport and gesture handling consistent with that full-screen app behaviour.
 - Motion should communicate state changes: short fades, small translations, press feedback and progress transitions. Avoid decorative bouncing, spinning, parallax or constant animation.
 - Always support `prefers-reduced-motion`.
 - Support iOS light and dark appearance.
