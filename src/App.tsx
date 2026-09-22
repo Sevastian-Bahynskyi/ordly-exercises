@@ -47,7 +47,8 @@ export default function App() {
       if (prev.currentIndex >= currentSession.exercises.length - 1) return { ...prev, completed: true }
       return { ...prev, currentIndex: prev.currentIndex + 1 }
     })
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
   }
 
   function reset() {
