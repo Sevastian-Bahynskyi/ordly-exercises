@@ -37,6 +37,15 @@ Use difficulty progression rather than random variety:
 
 A weak word can appear twice if the second appearance changes the task. Example: first map `besøge → навещать`, later build `Jeg besøger min ven.`
 
+## Answer ordering
+
+Treat authored array order as content only, never as a hint.
+
+- Unordered answer options and token banks are shuffled by the exercise engine at runtime. Do not design a task that depends on the first, second or last authored option being shown in that position.
+- For `match`, the right-hand meanings must be a true non-aligned shuffle when there is more than one pair: no meaning may initially sit on the same row as its matching Danish word.
+- Choice, dialogue, listening, odd-one-out, drag-gap, sentence-order and category-sort banks should start shuffled unless ordering is explicitly part of the learning objective.
+- Never disable runtime shuffling merely to make a generated session look deterministic.
+
 ## Tap-to-translate supporting words
 
 The learner may understand the target but not every supporting word in the sentence. Do not force them to leave the exercise or guess the context.
