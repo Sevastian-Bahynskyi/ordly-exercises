@@ -45,7 +45,7 @@ Intended public URL:
 
 ## Exercise library
 
-The reusable engine supports contextual choice, meaning matching, touch drag-and-drop gaps, sentence ordering, typed recall, true/false checks, odd-one-out, category sorting, dialogue selection, listening-style recognition, and reveal/self-rate recall.
+The reusable engine supports contextual choice, meaning matching, touch drag-and-drop gaps, sentence ordering, typed recall, true/false checks, odd-one-out, category sorting, dialogue selection, and reveal/self-rate recall. It does not generate listening exercises or synthetic speech.
 
 Future sessions should mix formats rather than drilling one interaction repeatedly.
 
