@@ -24,6 +24,8 @@ Every exercise may include `focusWords`. The end-of-session weak-word summary us
 
 Every exercise may also include `glosses: Record<string, string>`. Keys are visible Danish word forms and values are short learner-language translations, normally Russian for the current learner. The shared `GlossText` component turns those words into subtle tap-to-translate text.
 
+A session should also include `suggestedWords`. Each suggestion has a Danish word, learner-language translation, short Danish example, optional translated example, and optionally `connectsTo` words from the learner's active vocabulary. These are recommendations for what to learn next, not exercises and not automatic additions to Ordly.
+
 ## Variety target
 
 For a normal 15–25 exercise session, prefer at least 6 different interaction types. A longer session should normally use 8 or more.
@@ -36,6 +38,22 @@ Use difficulty progression rather than random variety:
 - active recall: `flash-reveal`, `type`
 
 A weak word can appear twice if the second appearance changes the task. Example: first map `besøge → навещать`, later build `Jeg besøger min ven.`
+
+## Related vocabulary suggestions
+
+Use the latest CSV and the session targets to choose vocabulary that increases expressive range.
+
+- Prefer words not already present in the learner's exported vocabulary.
+- Do not simply suggest synonyms of the words being practised.
+- Prefer words that form useful phrases, arguments, descriptions or sentence patterns with weak/active vocabulary.
+- High-frequency connectors, nouns, verbs and adjectives are usually better than rare topic-specific words.
+- Give each suggestion one short natural Danish example that demonstrates the connection.
+- For a 1–10 exercise session, normally suggest about 3 words. For 15–25 exercises, usually 4–6. For longer sessions, usually 6–10. Never exceed 20 without an explicit request.
+- The completion screen is the normal place to show them.
+
+## Sentence presentation
+
+Prompt sentences must visually read as one sentence. Tap-to-translate glosses may be inline, but the layout must not turn every token or punctuation mark into a separately spaced flex/grid item. Keep normal word spacing, punctuation spacing and line wrapping on iPhone.
 
 ## Answer ordering
 
