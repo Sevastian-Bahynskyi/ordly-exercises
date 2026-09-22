@@ -61,7 +61,9 @@ When the user asks for a practice session, even with a minimal request such as â
 - If a supporting word is outside the uploaded Ordly vocabulary, do not assume the learner knows it merely because it is common. Add a gloss when it matters for understanding the exercise.
 - Give immediate, concise feedback.
 - For uncertain Danish grammar, pronunciation, idiom or frequency, verify using authoritative Danish sources rather than guessing.
-- Do not generate listening exercises or synthesize exercise audio with browser/device text-to-speech. Audio in this app is limited to real per-word recordings already referenced by `audio_path` in `learning-stats.csv`, and only when the exercise engine has secure access to those files.
+- Do not generate listening exercises or synthesize exercise audio with browser/device text-to-speech. Audio in this app is limited to real per-word recordings referenced by `audio_path` in `learning-stats.csv`.
+- When generating a session, copy available recording paths for used vocabulary into `currentSession.audioByWord`. The app signs the learner into the same Supabase project once and requests short-lived URLs from the private `word-audio` bucket.
+- Pronunciation audio is supplementary and must only appear after the learner has answered the current exercise, so it can never reveal a hidden target. There is no TTS fallback; a word without a real recording gets no audio button.
 
 ## Visual design
 
@@ -86,7 +88,7 @@ Shared styling lives in `src/styles.css`. A generated practice session should al
 : Canonical latest learner statistics exported automatically from the main Ordly app. Read this fresh before every generated practice session.
 
 `src/session/currentSession.ts`
-: The generated session. This is the file that should change most often.
+: The generated session. This is the file that should change most often. Include `audioByWord` entries copied from the latest CSV for vocabulary used in the session when `audio_path` is available.
 
 `src/types.ts`
 : Schema for every supported exercise type.
