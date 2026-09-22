@@ -1,6 +1,6 @@
 # Ordly Exercises — ChatGPT maintenance guide
 
-This repository is designed to be maintained primarily from ChatGPT chat sessions, not as a normal local coding project.
+This repository is designed to be maintained from **ChatGPT browser-based chat sessions**. The user does not plan to maintain it locally with Codex or an IDE as part of the normal workflow.
 
 ## Purpose
 
@@ -13,9 +13,9 @@ This repository is designed to be maintained primarily from ChatGPT chat session
 
 ## Default workflow for ChatGPT
 
-When the user uploads a fresh Ordly export or asks for a practice session:
+When the user uploads a fresh Ordly CSV export or asks for a practice session:
 
-1. Analyse learning state before generating questions. Prioritise weak/due words and interleave a smaller number of new or strong words.
+1. Treat the uploaded CSV as the current learning-state source for that session. Analyse weak/due words first and interleave a smaller number of new or strong words.
 2. Respect the requested CEFR level. Default to A1 unless the user asks for another level.
 3. Prefer practical comprehension and use over raw translation testing.
 4. Choose a varied set of exercise types from the existing library.
@@ -35,6 +35,10 @@ When the user uploads a fresh Ordly export or asks for a practice session:
 - Avoid repeatedly testing words already known well. Weak words should reappear through different exercise types and contexts.
 - Prefer realistic Danish someone living in Denmark could use.
 - Use Russian glosses where useful for this learner, but do not make every exercise Danish → Russian translation.
+- Assume supporting vocabulary can be unknown even in an A1 sentence. Add `glosses` for potentially unfamiliar supporting Danish words so the learner can tap them for a small translation tooltip.
+- Glosses are assistance, not answer keys. **Never gloss the target word, blank answer, or decisive answer option before submission if the translation would reveal the answer.**
+- Prefer glossing concrete supporting content words (nouns, verbs, adjectives, useful phrases) that are not clearly mastered according to the uploaded CSV. Do not clutter every sentence with translations for obvious function words.
+- If a supporting word is outside the uploaded Ordly vocabulary, do not assume the learner knows it merely because it is common. Add a gloss when it matters for understanding the exercise.
 - Give immediate, concise feedback.
 - For uncertain Danish grammar, pronunciation, idiom or frequency, verify using authoritative Danish sources rather than guessing.
 
@@ -67,7 +71,7 @@ Shared styling lives in `src/styles.css`. A generated practice session should al
 : Reusable exercise implementations. Keep them generic and content-agnostic.
 
 `src/components/`
-: Shared visual primitives.
+: Shared visual primitives. `GlossText.tsx` is the standard tap-to-translate renderer for supporting vocabulary.
 
 `src/storage/progress.ts`
 : Browser `localStorage` persistence keyed by session id.
