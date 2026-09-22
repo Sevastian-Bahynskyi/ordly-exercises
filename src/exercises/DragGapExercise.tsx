@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { DndContext, PointerSensor, useDraggable, useDroppable, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { ExerciseFrame } from '../components/ExerciseFrame'
@@ -7,8 +7,6 @@ import { GlossText } from '../components/GlossText'
 import type { DragGapExercise as T } from '../types'
 import type { ExerciseProps } from './common'
 import { shuffleDifferent } from '../utils/shuffle'
-
-type Draft = { selected?: string }
 
 function DragToken({ value, disabled, onTap }: { value: string; disabled?: boolean; onTap: () => void }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: value, disabled })
@@ -33,13 +31,15 @@ function Gap({ selected, active }: { selected?: string; active: boolean }) {
   return <span ref={setNodeRef} className={`gap-target ${isOver ? 'over' : ''}`}>{selected ?? 'drop here'}</span>
 }
 
-export function DragGapExercise({ exercise, draft, result, onDraftChange, onComplete }: ExerciseProps<T, Draft>) {
+export function DragGapExercise({ exercise, result, onComplete }: ExerciseProps<T>) {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
-  const selected = result?.completed ? (result.response as string) : draft?.selected
+  const selected = result?.completed ? (result.response as string) : undefined
   const optionOrder = useMemo(() => shuffleDifferent(exercise.options), [exercise])
+  const submittedRef = useRef(Boolean(result?.completed))
 
   function submit(value: string) {
-    if (result?.completed) return
+    if (result?.completed || submittedRef.current) return
+    submittedRef.current = true
     onComplete(value === exercise.answer, value)
   }
 
@@ -48,18 +48,18 @@ export function DragGapExercise({ exercise, draft, result, onDraftChange, onComp
   }
 
   return (
-    <ExerciseFrame badge="Drag & drop" title={exercise.title} instruction={exercise.instruction ?? 'Drag a word into the gap. You can also tap a word, then tap the gap.'}>
+    <ExerciseFrame badge="Drag & drop" title={exercise.title} instruction={exercise.instruction ?? 'Drag a word into the gap, or simply tap a word.'}>
       <DndContext sensors={sensors} onDragEnd={onDragEnd}>
         <div className="gap-sentence">
           <span><GlossText text={exercise.before} glosses={exercise.glosses} /></span>
-          <button type="button" className="gap-button" disabled={result?.completed || !draft?.selected} onClick={() => draft?.selected && submit(draft.selected)}>
+          <span className="gap-button">
             <Gap selected={selected} active={!result?.completed} />
-          </button>
+          </span>
           <span><GlossText text={exercise.after} glosses={exercise.glosses} /></span>
         </div>
         <div className="token-bank">
           {optionOrder.map((option) => (
-            <DragToken key={option} value={option} disabled={result?.completed} onTap={() => onDraftChange({ selected: option })} />
+            <DragToken key={option} value={option} disabled={result?.completed} onTap={() => submit(option)} />
           ))}
         </div>
       </DndContext>
