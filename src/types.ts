@@ -8,7 +8,6 @@ export type ExerciseType =
   | 'odd-one-out'
   | 'category-sort'
   | 'dialogue'
-  | 'listen-choice'
   | 'flash-reveal'
 
 export type BaseExercise = {
@@ -89,13 +88,6 @@ export type DialogueExercise = BaseExercise & {
   answer: string
 }
 
-export type ListenChoiceExercise = BaseExercise & {
-  type: 'listen-choice'
-  text: string
-  options: string[]
-  answer: string
-}
-
 export type FlashRevealExercise = BaseExercise & {
   type: 'flash-reveal'
   prompt: string
@@ -114,7 +106,6 @@ export type Exercise =
   | OddOneOutExercise
   | CategorySortExercise
   | DialogueExercise
-  | ListenChoiceExercise
   | FlashRevealExercise
 
 export type PracticeSession = {
