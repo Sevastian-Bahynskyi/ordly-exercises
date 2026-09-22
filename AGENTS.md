@@ -50,7 +50,7 @@ When the user asks for a practice session, even with a minimal request such as �
 - Do not show the target answer before the learner responds unless the exercise is explicitly a reveal/flashcard exercise.
 - Randomise every unordered answer bank at runtime. Do not rely on the order written in `currentSession.ts`; correct answers must not acquire a predictable position across generated sessions.
 - `match` exercises are stricter: the meaning column must be a derangement of the Danish column whenever there is more than one pair, so no correct pair may appear on the same row by chance.
-- Sentence-order token banks, drag-gap options, choice/dialogue/listening options, odd-one-out items and category-sort item banks should all start shuffled unless their order itself is pedagogically meaningful.
+- Sentence-order token banks, drag-gap options, choice/dialogue options, odd-one-out items and category-sort item banks should all start shuffled unless their order itself is pedagogically meaningful.
 - Mix recognition and production. A session should not become only multiple choice.
 - Avoid repeatedly testing words already known well. Weak words should reappear through different exercise types and contexts.
 - Prefer realistic Danish someone living in Denmark could use.
@@ -61,6 +61,7 @@ When the user asks for a practice session, even with a minimal request such as �
 - If a supporting word is outside the uploaded Ordly vocabulary, do not assume the learner knows it merely because it is common. Add a gloss when it matters for understanding the exercise.
 - Give immediate, concise feedback.
 - For uncertain Danish grammar, pronunciation, idiom or frequency, verify using authoritative Danish sources rather than guessing.
+- Do not generate listening exercises or synthesize exercise audio with browser/device text-to-speech. Audio in this app is limited to real per-word recordings already referenced by `audio_path` in `learning-stats.csv`, and only when the exercise engine has secure access to those files.
 
 ## Visual design
 
@@ -113,8 +114,7 @@ Shared styling lives in `src/styles.css`. A generated practice session should al
 7. `odd-one-out` — identify which item does not belong.
 8. `category-sort` — group words by meaning/function/category.
 9. `dialogue` — choose the natural reply in a short exchange.
-10. `listen-choice` — browser speech synthesis + recognition choice.
-11. `flash-reveal` — active recall, reveal answer, self-rate.
+10. `flash-reveal` — active recall, reveal answer, self-rate.
 
 Add genuinely different formats over time when useful, for example timeline ordering, mini memory grid, error spotting, picture association, conjugation grids, route/scenario choices or pronunciation contrasts. Do not add variants that are visually different but cognitively identical just to increase the count.
 
