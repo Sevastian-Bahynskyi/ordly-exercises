@@ -35,19 +35,22 @@ For every request to create or regenerate a practice session:
 5. Use strong/mastered vocabulary mainly as supporting context or occasional interleaving. Do not waste the session repeatedly testing words that are already secure.
 6. Respect explicit user instructions for count, level, focus, exercise type or difficulty. If the user gives no level, default to **A1**. If the user gives no count, default to **20 exercises**.
 7. Generate a varied session using the reusable exercise engine. A normal session should mix recognition, supported use, production and active recall rather than repeating one interaction.
-8. Keep the current learner support rules:
+8. Generate a small `suggestedWords` set for the completion screen. Choose useful new words that combine naturally with the session's weak/active vocabulary, preferably words absent from the latest CSV. Avoid synonym lists; favour vocabulary that broadens sentence-building possibilities. Include short Danish examples and learner-language translations. Scale the count with session length, from about 3 for a very short session up to at most 20 for unusually long sessions.
+9. Keep the current learner support rules:
    - iPhone-first;
    - short, realistic Danish;
    - tap-to-translate glosses for potentially unknown supporting vocabulary;
    - never gloss the current target/answer before submission when that would reveal it;
    - concise immediate feedback;
+   - compact practice layout: progress + exercise, without a large session hero/title block;
+   - sentence prompts rendered as continuous natural text rather than visibly separated word chunks;
    - no listening exercises or browser/device text-to-speech;
    - copy available `audio_path` values for vocabulary used in the session into `currentSession.audioByWord`; real recordings are offered only after an exercise is answered through authenticated access to the private Supabase `word-audio` bucket.
-9. Replace `src/session/currentSession.ts` with the newly generated session and assign a new unique `session.id`.
-10. Reuse the existing UI/components unless a genuinely new learning interaction is needed.
-11. Commit the changes to `main`.
-12. Verify the GitHub Pages workflow for the final commit. Do not report the session as ready until the final deployment succeeds. If deployment fails, inspect the failure and fix it.
-13. Report completion concisely to the learner. The normal completion message should say the session is ready and give the stable app URL.
+10. Replace `src/session/currentSession.ts` with the newly generated session and assign a new unique `session.id`.
+11. Reuse the existing UI/components unless a genuinely new learning interaction is needed.
+12. Commit the changes to `main`.
+13. Verify the GitHub Pages workflow for the final commit. Do not report the session as ready until the final deployment succeeds. If deployment fails, inspect the failure and fix it.
+14. Report completion concisely to the learner. The normal completion message should say the session is ready and give the stable app URL.
 
 Stable app URL:
 
