@@ -10,12 +10,24 @@ export type ExerciseType =
   | 'dialogue'
   | 'flash-reveal'
 
+export type EvidenceSkill =
+  | 'meaning'
+  | 'grammar'
+  | 'word-order'
+  | 'production'
+  | 'collocation'
+  | 'communication'
+  | 'classification'
+  | 'recall'
+
 export type BaseExercise = {
   id: string
   type: ExerciseType
   title: string
   instruction?: string
   focusWords?: string[]
+  evidenceWords?: string[]
+  evidenceSkill?: EvidenceSkill
   explanation?: string
   /**
    * Supporting-word translations shown only when the learner taps a word.
@@ -121,6 +133,8 @@ export type PracticeSession = {
   title: string
   subtitle: string
   level: string
+  evidenceSessionId?: string
+  entryIdByWord?: Record<string, string>
   audioByWord?: Record<string, string>
   suggestedWords?: SuggestedWord[]
   exercises: Exercise[]
