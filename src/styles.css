@@ -578,3 +578,66 @@ h1 {
     transition-delay: 0ms !important;
   }
 }
+
+
+/* Tap-to-translate supporting vocabulary */
+.gloss-wrap {
+  position: relative;
+  display: inline;
+}
+.gloss-word {
+  appearance: none;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1.5px dotted color-mix(in srgb, var(--secondary) 55%, transparent);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  cursor: help;
+  touch-action: manipulation;
+}
+.gloss-word:active {
+  opacity: .62;
+}
+.gloss-tooltip {
+  position: absolute;
+  z-index: 80;
+  top: calc(100% + 8px);
+  left: 50%;
+  width: max-content;
+  max-width: min(220px, 72vw);
+  transform: translateX(-50%);
+  padding: 7px 10px;
+  border: 1px solid rgba(60,60,67,.10);
+  border-radius: 11px;
+  background: rgba(29,29,31,.94);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 560;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: normal;
+  box-shadow: 0 7px 24px rgba(0,0,0,.14);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  animation: glossIn .14s ease-out both;
+}
+.gloss-tooltip::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  width: 9px;
+  height: 9px;
+  transform: translateX(-50%) rotate(45deg);
+  background: rgba(29,29,31,.94);
+}
+@keyframes glossIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-3px) scale(.98); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
