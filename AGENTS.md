@@ -60,10 +60,14 @@ When the user asks for a practice session, even with a minimal request such as �
 - Prefer glossing concrete supporting content words (nouns, verbs, adjectives, useful phrases) that are not clearly mastered according to the uploaded CSV. Do not clutter every sentence with translations for obvious function words.
 - If a supporting word is outside the uploaded Ordly vocabulary, do not assume the learner knows it merely because it is common. Add a gloss when it matters for understanding the exercise.
 - Give immediate, concise feedback.
+- Keep the practice screen compact: after the toolbar, show only the progress indicator/count and the current exercise. Do not add a large session title, date label, subtitle or hero block above exercises.
+- Sentence prompts must read as continuous prose. Do not lay individual words or gloss fragments out as separate flex/grid items that create artificial spacing or broken sentence rhythm.
 - For uncertain Danish grammar, pronunciation, idiom or frequency, verify using authoritative Danish sources rather than guessing.
 - Do not generate listening exercises or synthesize exercise audio with browser/device text-to-speech. Audio in this app is limited to real per-word recordings referenced by `audio_path` in `learning-stats.csv`.
 - When generating a session, copy available recording paths for used vocabulary into `currentSession.audioByWord`. The app signs the learner into the same Supabase project once and requests short-lived URLs from the private `word-audio` bucket.
 - Pronunciation audio is supplementary and must only appear after the learner has answered the current exercise, so it can never reveal a hidden target. There is no TTS fallback; a word without a real recording gets no audio button.
+- Every generated session should include `suggestedWords`: a small set of useful vocabulary to consider learning next. Suggestions should expand what the learner can say with current weak/active vocabulary, not merely provide synonyms. Prefer high-frequency words, connectors, nouns and verbs that combine naturally with session targets, and prefer words absent from the latest CSV. Include a short natural Danish example and a short learner-language translation. Do not automatically add suggestions to Ordly.
+- Scale suggestion count with session size rather than using a fixed number: roughly 3 for very short sessions, 4–6 for normal 15–25 exercise sessions, 6–10 for longer sessions, and never more than 20 unless explicitly requested.
 
 ## Visual design
 
@@ -88,7 +92,7 @@ Shared styling lives in `src/styles.css`. A generated practice session should al
 : Canonical latest learner statistics exported automatically from the main Ordly app. Read this fresh before every generated practice session.
 
 `src/session/currentSession.ts`
-: The generated session. This is the file that should change most often. Include `audioByWord` entries copied from the latest CSV for vocabulary used in the session when `audio_path` is available.
+: The generated session. This is the file that should change most often. Include `audioByWord` entries copied from the latest CSV for vocabulary used in the session when `audio_path` is available, plus `suggestedWords` for related vocabulary shown after completion.
 
 `src/types.ts`
 : Schema for every supported exercise type.
