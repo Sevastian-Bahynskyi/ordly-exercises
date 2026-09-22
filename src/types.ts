@@ -113,6 +113,7 @@ export type PracticeSession = {
   title: string
   subtitle: string
   level: string
+  audioByWord?: Record<string, string>
   exercises: Exercise[]
 }
 
