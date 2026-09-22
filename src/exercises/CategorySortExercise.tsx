@@ -1,11 +1,12 @@
 import { DndContext, PointerSensor, useDraggable, useDroppable, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
-import type { ReactNode } from 'react'
+import { useMemo, type ReactNode } from 'react'
 import { CSS } from '@dnd-kit/utilities'
 import { ExerciseFrame } from '../components/ExerciseFrame'
 import { Feedback } from '../components/Feedback'
 import { PrimaryButton } from '../components/PrimaryButton'
 import type { CategorySortExercise as T } from '../types'
 import type { ExerciseProps } from './common'
+import { shuffleDifferent } from '../utils/shuffle'
 
 type Draft = { assignments: Record<string, string> }
 
@@ -21,7 +22,8 @@ function Bucket({ name, children }: { name: string; children: ReactNode }) {
 export function CategorySortExercise({ exercise, draft, result, onDraftChange, onComplete }: ExerciseProps<T, Draft>) {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
   const state = draft ?? { assignments: {} }
-  const unassigned = exercise.items.filter((item) => !state.assignments[item.text])
+  const itemOrder = useMemo(() => shuffleDifferent(exercise.items), [exercise])
+  const unassigned = itemOrder.filter((item) => !state.assignments[item.text])
   function assign(text: string, category: string) { onDraftChange({ assignments: { ...state.assignments, [text]: category } }) }
   function dragEnd(event: DragEndEvent) {
     if (!event.over) return
@@ -44,7 +46,7 @@ export function CategorySortExercise({ exercise, draft, result, onDraftChange, o
         <div className="category-grid">
           {exercise.categories.map((category) => (
             <Bucket key={category} name={category}>
-              {exercise.items.filter((item) => state.assignments[item.text] === category).map((item) => (
+              {itemOrder.filter((item) => state.assignments[item.text] === category).map((item) => (
                 <button type="button" className="assigned-chip" key={item.text} disabled={result?.completed} onClick={() => tap(item.text)}>{item.text}</button>
               ))}
             </Bucket>
