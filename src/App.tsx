@@ -83,6 +83,29 @@ export default function App() {
               {(weakWords.length ? weakWords : ['No weak words this round']).map((word) => <span className="tag" key={word}>{word}</span>)}
             </div>
           </div>
+          {!!currentSession.suggestedWords?.length && (
+            <div className="suggested-panel">
+              <div className="suggested-heading">
+                <strong>Useful words to add next</strong>
+                <span>Chosen to combine naturally with vocabulary from this session.</span>
+              </div>
+              <div className="suggested-word-list">
+                {currentSession.suggestedWords.map((word) => (
+                  <article className="suggested-word" key={word.danish}>
+                    <div className="suggested-word-top">
+                      <strong>{word.danish}</strong>
+                      <span>{word.translation}</span>
+                    </div>
+                    <div className="suggested-example">{word.example}</div>
+                    {word.exampleTranslation && <div className="suggested-example-translation">{word.exampleTranslation}</div>}
+                    {!!word.connectsTo?.length && (
+                      <div className="suggested-connects">Works with: {word.connectsTo.join(', ')}</div>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
           <PrimaryButton onClick={() => { clearProgress(currentSession); setProgress(blankProgress(currentSession)) }}>
             Start a fresh round
           </PrimaryButton>
@@ -106,29 +129,21 @@ export default function App() {
         </button>
       </header>
 
-      <section className="session-hero">
-        <div className="session-kicker">Today</div>
-        <div className="session-heading-row">
-          <div>
-            <h2>{currentSession.title}</h2>
-            <p>{currentSession.subtitle}</p>
-          </div>
-          <div className="step-counter" aria-label={`Exercise ${progress.currentIndex + 1} of ${currentSession.exercises.length}`}>
-            <strong>{progress.currentIndex + 1}</strong>
-            <span>/ {currentSession.exercises.length}</span>
-          </div>
+      <div className="progress-row">
+        <div
+          className="progress-track"
+          role="progressbar"
+          aria-label="Session progress"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(percent)}
+        >
+          <div className="progress-fill" style={{ width: `${Math.max(3, percent)}%` }} />
         </div>
-      </section>
-
-      <div
-        className="progress-track"
-        role="progressbar"
-        aria-label="Session progress"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(percent)}
-      >
-        <div className="progress-fill" style={{ width: `${Math.max(3, percent)}%` }} />
+        <div className="compact-step-counter" aria-label={`Exercise ${progress.currentIndex + 1} of ${currentSession.exercises.length}`}>
+          <strong>{progress.currentIndex + 1}</strong>
+          <span>/ {currentSession.exercises.length}</span>
+        </div>
       </div>
 
       <div className="exercise-stage" key={exercise.id}>
