@@ -20,11 +20,21 @@ If the learner gives only an exercise count, infer the content from these statis
 
 A session has a unique `id`, title, subtitle, CEFR level and ordered `exercises` array. The `id` is also the browser persistence namespace. Change it when replacing the session.
 
-Every exercise may include `focusWords`. The end-of-session weak-word summary uses these tags when the learner misses an exercise.
+Every exercise may include `focusWords`. The end-of-session weak-word summary and pronunciation support use these tags when relevant.
+
+Every exercise that tests saved vocabulary should also include `evidenceWords` and `evidenceSkill`. `evidenceWords` is stricter than `focusWords`: include only vocabulary whose knowledge is genuinely assessed by the learner's answer. For example, if `synes` merely appears in context while the blank tests the neuter form of `nødvendig`, only `nødvendig` belongs in `evidenceWords`.
 
 Every exercise may also include `glosses: Record<string, string>`. Keys are visible Danish word forms and values are short learner-language translations, normally Russian for the current learner. The shared `GlossText` component turns those words into subtle tap-to-translate text.
 
 A session should also include `suggestedWords`. Each suggestion has a Danish word, learner-language translation, short Danish example, optional translated example, and optionally `connectsTo` words from the learner's active vocabulary. These are recommendations for what to learn next, not exercises and not automatic additions to Ordly.
+
+## Adaptive evidence
+
+Each materially new session needs a stable UUID `evidenceSessionId` and an `entryIdByWord` map copied from the latest CSV's `entry_id` values for assessed vocabulary. The browser queues completed exercise evidence locally and syncs it to the existing Supabase `practice_attempts` table when the learner is authenticated.
+
+Use `evidenceSkill` to describe what the answer actually tests: `meaning`, `grammar`, `word-order`, `production`, `collocation`, `communication`, `classification`, or `recall`. Choice-based formats are supported recognition evidence, typed answers are unaided production evidence, and reveal cards are model-assisted self-rating evidence. These signals are intentionally not equal in strength.
+
+Future session generation should inspect the exported `practice_history_json` and use both result and assistance. Repeated incorrect grammar or word-order evidence should influence exercise selection even when ordinary translation recall is good.
 
 ## Variety target
 
