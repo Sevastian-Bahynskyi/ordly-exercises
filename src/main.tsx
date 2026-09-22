@@ -3,6 +3,16 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import './styles.css'
 
+const preventGestureZoom = (event: Event) => event.preventDefault()
+const preventMultiTouchZoom = (event: TouchEvent) => {
+  if (event.touches.length > 1) event.preventDefault()
+}
+
+document.addEventListener('gesturestart', preventGestureZoom, { passive: false })
+document.addEventListener('gesturechange', preventGestureZoom, { passive: false })
+document.addEventListener('gestureend', preventGestureZoom, { passive: false })
+document.addEventListener('touchmove', preventMultiTouchZoom, { passive: false })
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
