@@ -75,6 +75,7 @@ The learner may understand the target but not every supporting word in the sente
 - Never add a pre-answer gloss for the current target/answer if it would reveal what the learner is supposed to recall.
 - Avoid glossing every function word. The interface should stay visually quiet.
 - Context text in choice, drag-gap, dialogue, typed, binary, odd-one-out and reveal exercises supports gloss rendering. Answer controls should remain answer controls; do not overload them with translation taps that make selection frustrating.
+- Gloss tooltips close on any outside tap so they never remain stuck over the exercise.
 - If an exercise would require many unknown answer tokens, redesign it with simpler supporting vocabulary rather than making every answer token a dictionary entry.
 
 ## A1 constraints
@@ -85,6 +86,10 @@ The learner may understand the target but not every supporting word in the sente
 - Avoid unnecessary subordinate clauses.
 - Reuse high-frequency nouns and verbs so sentence comprehension does not depend on unknown vocabulary.
 - Do not expose the answer in headings, focus labels or explanatory copy before submission.
+
+## Drag-gap interaction
+
+Dragging and tapping are equivalent answer methods. Dropping an option into the gap submits it immediately, and tapping an option must also submit it immediately. Do not require a second tap on the gap after the word is already shown there.
 
 ## Typed answers
 
