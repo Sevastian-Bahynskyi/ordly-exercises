@@ -28,6 +28,8 @@ If no count is given, the default is **20 exercises**.
 
 Supporting Danish words that may be unfamiliar should receive tap-to-translate glosses. The learner can tap an underlined word in context to see a small translation without leaving the exercise. Glosses must never reveal the answer currently being tested.
 
+Real word recordings from Ordly can be played after an exercise is answered. The learner signs into the same Supabase account once; the browser then requests short-lived URLs for objects in the private `word-audio` bucket. The Supabase URL and publishable key are public client configuration, so no GitHub Pages secret or service-role key is required.
+
 See [`docs/CHATGPT_WORKFLOW.md`](./docs/CHATGPT_WORKFLOW.md) for the complete operating contract.
 
 Intended public URL:
@@ -41,7 +43,8 @@ Intended public URL:
 - `dnd-kit` for touch-friendly drag and drop
 - `lucide-react` for interface icons
 - GitHub Pages for free static hosting
-- No backend and no paid runtime services
+- Supabase browser auth + private Storage for existing Ordly word recordings
+- No custom backend and no paid runtime services
 
 ## Exercise library
 
