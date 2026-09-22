@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ExerciseFrame } from '../components/ExerciseFrame'
 import { Feedback } from '../components/Feedback'
 import { PrimaryButton } from '../components/PrimaryButton'
+import { GlossText } from '../components/GlossText'
 import type { TypeExercise as T } from '../types'
 import type { ExerciseProps } from './common'
 import { normalize } from './common'
@@ -18,7 +19,7 @@ export function TypeExercise({ exercise, draft, result, onDraftChange, onComplet
   }
   return (
     <ExerciseFrame badge="Type" title={exercise.title} instruction={exercise.instruction ?? 'Type a short answer.'}>
-      <div className="prompt-panel">{exercise.prompt}</div>
+      <div className="prompt-panel"><GlossText text={exercise.prompt} glosses={exercise.glosses} /></div>
       <input
         className="answer-input"
         value={result?.completed ? String(result.response ?? '') : value}
