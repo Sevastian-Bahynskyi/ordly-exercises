@@ -1,6 +1,7 @@
 import { Eye } from 'lucide-react'
 import { ExerciseFrame } from '../components/ExerciseFrame'
 import { Feedback } from '../components/Feedback'
+import { GlossText } from '../components/GlossText'
 import type { FlashRevealExercise as T } from '../types'
 import type { ExerciseProps } from './common'
 
@@ -11,7 +12,7 @@ export function FlashRevealExercise({ exercise, draft, result, onDraftChange, on
   return (
     <ExerciseFrame badge="Recall" title={exercise.title} instruction={exercise.instruction ?? 'Think of the answer before revealing it.'}>
       <div className="flash-card">
-        <div className="flash-prompt">{exercise.prompt}</div>
+        <div className="flash-prompt"><GlossText text={exercise.prompt} glosses={exercise.glosses} /></div>
         {revealed ? <div className="flash-answer">{exercise.answer}</div> : <button type="button" className="reveal-button" onClick={() => onDraftChange({ revealed: true })}><Eye size={20} />Reveal</button>}
       </div>
       {revealed && !result?.completed && (
