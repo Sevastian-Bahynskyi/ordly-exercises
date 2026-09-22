@@ -8,3 +8,13 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/ordly-exercises/sw.js', {
+      scope: '/ordly-exercises/',
+    }).catch(() => {
+      // Practice still works online if service-worker registration is unavailable.
+    })
+  })
+}
