@@ -15,6 +15,29 @@ export const currentSession: PracticeSession = {
     'afhænge': 'words/afhaenge-0502ebed.mp3',
     'af': 'words/af-d1e62250.mp3',
   },
+  suggestedWords: [
+    {
+      danish: 'hjælp',
+      translation: 'помощь',
+      example: 'Min bedstemor har brug for hjælp.',
+      exampleTranslation: 'Моей бабушке нужна помощь.',
+      connectsTo: ['besøge', 'støtte'],
+    },
+    {
+      danish: 'grund',
+      translation: 'причина',
+      example: 'Kan du forklare grunden?',
+      exampleTranslation: 'Можешь объяснить причину?',
+      connectsTo: ['forklare', 'hvorfor'],
+    },
+    {
+      danish: 'beslutning',
+      translation: 'решение',
+      example: 'Beslutningen afhænger af vejret.',
+      exampleTranslation: 'Решение зависит от погоды.',
+      connectsTo: ['afhænge', 'af'],
+    },
+  ],
   exercises: [
     {
       id: 'a2-choice-noedvendig',
