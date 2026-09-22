@@ -641,3 +641,65 @@ h1 {
   from { opacity: 0; transform: translateX(-50%) translateY(-3px) scale(.98); }
   to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 }
+
+
+/* Real Ordly word recordings. Shown only after an exercise has been answered. */
+.pronunciation-panel {
+  display: grid;
+  gap: 10px;
+  margin-top: 11px;
+  padding: 13px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  background: rgba(255,255,255,.72);
+  color: var(--secondary);
+  font-size: 13px;
+  box-shadow: 0 3px 14px rgba(0,0,0,.025);
+}
+.pronunciation-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text);
+}
+.pronunciation-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.word-audio-button, .audio-signin-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 13px;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: rgba(255,255,255,.94);
+  color: var(--text);
+  font-weight: 650;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.word-audio-button:disabled, .audio-signin-button:disabled { opacity: .45; }
+.word-audio-button:active, .audio-signin-button:active { transform: scale(.975); }
+.audio-login-form { display: grid; gap: 8px; }
+.audio-login-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 13px;
+  background: rgba(255,255,255,.96);
+  color: var(--text);
+}
+.audio-login-form .audio-signin-button { width: 100%; }
+.audio-message { color: var(--secondary); line-height: 1.4; }
+.spin { animation: loadingSpin .8s linear infinite; }
+@keyframes loadingSpin { to { transform: rotate(360deg); } }
+
+@media (prefers-color-scheme: dark) {
+  .pronunciation-panel { background: rgba(28,28,30,.88); }
+  .word-audio-button, .audio-signin-button, .audio-login-form input { background: #2c2c2e; }
+}
