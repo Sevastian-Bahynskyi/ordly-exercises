@@ -1,6 +1,20 @@
 # Exercise authoring
 
-Most practice updates should only edit `src/session/currentSession.ts`.
+Read `CHATGPT_WORKFLOW.md` first. Most practice updates should only edit `src/session/currentSession.ts` after analysing the latest root `learning-stats.csv`.
+
+## Source of learner state
+
+`learning-stats.csv` on `main` is the default and authoritative input.
+
+Before authoring a session:
+
+1. fetch the file fresh from the repository;
+2. inspect the available scheduling, review, practice and memory-strength fields;
+3. favour weak/due/fragile items, then new items;
+4. use strong vocabulary mainly as context or occasional interleaving;
+5. never substitute statistics remembered from an earlier chat.
+
+If the learner gives only an exercise count, infer the content from these statistics. If no count is given, use 20. If no CEFR level is given, use A1.
 
 ## Session shape
 
@@ -28,7 +42,7 @@ A weak word can appear twice if the second appearance changes the task. Example:
 The learner may understand the target but not every supporting word in the sentence. Do not force them to leave the exercise or guess the context.
 
 - Add `glosses` for supporting Danish words that may be unfamiliar.
-- Base this decision on the latest uploaded Ordly CSV when available. Words absent from the export can still be unknown.
+- Base this decision on the latest repository `learning-stats.csv`. Words absent from the export can still be unknown.
 - Keep translations short and contextual: e.g. `{ besked: 'сообщение' }`.
 - Use the exact visible inflected form as the key where possible.
 - Never add a pre-answer gloss for the current target/answer if it would reveal what the learner is supposed to recall.

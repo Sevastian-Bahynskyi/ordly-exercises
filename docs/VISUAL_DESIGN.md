@@ -26,3 +26,10 @@ This app is iPhone-first and follows the spirit of Apple's current Human Interfa
 - Automatic dark mode
 
 Do not style individual generated sessions differently unless the exercise itself requires a new reusable interaction pattern.
+
+
+## Generated learning content
+
+Practice content is generated from the latest repository `learning-stats.csv` according to `CHATGPT_WORKFLOW.md`. Session generation should not introduce one-off styling.
+
+Tap-to-translate supporting words are a standard learning interaction. Keep their dotted affordance and tooltip visually subtle so they help comprehension without competing with the target exercise or revealing the answer.

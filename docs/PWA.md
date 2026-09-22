@@ -24,3 +24,10 @@ Browsers that support PWA installation use the web app manifest and the 192/512 
 ## Future icon changes
 
 If the icon is replaced, regenerate at least 180, 192 and 512 px PNG variants. Keep them square, opaque and readable at small sizes.
+
+
+## Generated session updates
+
+The installed PWA is the delivery surface, not the source of learner statistics. Ordly writes the latest statistics to the repository's root `learning-stats.csv`; ChatGPT reads that file when the learner asks for a new session and publishes the generated session to this PWA.
+
+The browser does not need GitHub credentials or access to the CSV. See `CHATGPT_WORKFLOW.md`.

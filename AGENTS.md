@@ -11,18 +11,35 @@ This repository is designed to be maintained from **ChatGPT browser-based chat s
 - Do not modify the Ordly repo when the user merely asks for a new practice session.
 - The normal operation here is to regenerate practice content while reusing the exercise engine.
 
+## Canonical learning data
+
+The main Ordly application automatically creates or updates `learning-stats.csv` in the root of this repository when the learner uses **Save to GitHub** on the Material page.
+
+**For normal practice requests, this repository CSV is authoritative.**
+
+- Always fetch the current `learning-stats.csv` from the `main` branch immediately before generating a session.
+- Never use a previously remembered CSV or statistics from an older chat as a substitute for reading the current file.
+- Do not ask the learner to upload a CSV in chat unless `learning-stats.csv` is missing, empty, invalid, or the learner explicitly wants to override it with an uploaded file.
+- If the file is unavailable or invalid, tell the learner to use **Material → Save to GitHub** in Ordly and retry.
+- The practice web app does not read this CSV at runtime. ChatGPT consumes it while authoring the next static session.
+
+Full workflow: `docs/CHATGPT_WORKFLOW.md`.
+
 ## Default workflow for ChatGPT
 
-When the user uploads a fresh Ordly CSV export or asks for a practice session:
+When the user asks for a practice session, even with a minimal request such as “create 20 exercises”:
 
-1. Treat the uploaded CSV as the current learning-state source for that session. Analyse weak/due words first and interleave a smaller number of new or strong words.
-2. Respect the requested CEFR level. Default to A1 unless the user asks for another level.
-3. Prefer practical comprehension and use over raw translation testing.
-4. Choose a varied set of exercise types from the existing library.
-5. Update `src/session/currentSession.ts` with a new unique `session.id` when the exercise set changes materially. This intentionally gives the new session its own `localStorage` progress.
-6. Reuse components. Only add/change a component if the requested exercise cannot be expressed cleanly with the existing types.
-7. Build before pushing when tooling is available.
-8. Push to `main`; GitHub Pages then republishes the stable site.
+1. Fetch the latest root `learning-stats.csv` from `main`.
+2. Analyse the available learning signals. Prioritise weak, missed, due, fragile/building items and a controlled amount of new vocabulary. Avoid wasting exercises on secure words.
+3. Respect explicit count, CEFR level, focus, difficulty or requested exercise types. Default to **A1** and **20 exercises** when those are omitted.
+4. Prefer practical comprehension and use over raw translation testing.
+5. Choose a varied mix of exercise types from the existing library.
+6. Update `src/session/currentSession.ts` with a new unique `session.id`. A materially new session must get fresh `localStorage` progress.
+7. Reuse components. Only add/change a component if the requested learning interaction cannot be expressed cleanly with the existing types.
+8. Build/validate when tooling is available.
+9. Push to `main`.
+10. Verify the GitHub Pages workflow for the **final commit**. If it fails, inspect and fix it. Do not tell the learner the session is ready before the final deployment succeeds.
+11. Report completion concisely and give the stable PWA URL.
 
 ## Learning design rules
 
@@ -60,6 +77,9 @@ The practice surface should feel native to modern iPhone and visually close to A
 Shared styling lives in `src/styles.css`. A generated practice session should almost never need custom CSS.
 
 ## Architecture
+
+`learning-stats.csv`
+: Canonical latest learner statistics exported automatically from the main Ordly app. Read this fresh before every generated practice session.
 
 `src/session/currentSession.ts`
 : The generated session. This is the file that should change most often.
