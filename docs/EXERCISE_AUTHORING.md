@@ -30,7 +30,7 @@ For a normal 15–25 exercise session, prefer at least 6 different interaction t
 
 Use difficulty progression rather than random variety:
 
-- recognition: `choice`, `match`, `binary`, `listen-choice`
+- recognition: `choice`, `match`, `binary`
 - supported use: `drag-gap`, `dialogue`, `category-sort`, `odd-one-out`
 - production: `order`, `type`
 - active recall: `flash-reveal`, `type`
@@ -43,7 +43,7 @@ Treat authored array order as content only, never as a hint.
 
 - Unordered answer options and token banks are shuffled by the exercise engine at runtime. Do not design a task that depends on the first, second or last authored option being shown in that position.
 - For `match`, the right-hand meanings must be a true non-aligned shuffle when there is more than one pair: no meaning may initially sit on the same row as its matching Danish word.
-- Choice, dialogue, listening, odd-one-out, drag-gap, sentence-order and category-sort banks should start shuffled unless ordering is explicitly part of the learning objective.
+- Choice, dialogue, odd-one-out, drag-gap, sentence-order and category-sort banks should start shuffled unless ordering is explicitly part of the learning objective.
 - Never disable runtime shuffling merely to make a generated session look deterministic.
 
 ## Tap-to-translate supporting words
@@ -72,6 +72,8 @@ The learner may understand the target but not every supporting word in the sente
 
 Keep typed answers short at A1: one word, a short phrase, or a very short sentence. List reasonable accepted variants in `accepted`.
 
-## Listening
+## Audio
 
-`listen-choice` uses browser `speechSynthesis` with `da-DK`. Voice quality depends on the device. It is useful for recognition variety but is not an authoritative pronunciation source. Do not use it to teach fine pronunciation distinctions.
+Do not create listening exercises and do not use browser/device text-to-speech for exercise content.
+
+The CSV may contain `audio_path` for individual words with real recordings stored in Ordly's Supabase `word-audio` bucket. Those recordings may be exposed as a small play control beside a word once the practice app has a secure way to obtain them. Audio playback is supplementary pronunciation support, not a separate listening exercise, and words without a real recording should simply have no audio control.
