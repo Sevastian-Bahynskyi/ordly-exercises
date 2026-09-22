@@ -48,6 +48,9 @@ When the user asks for a practice session, even with a minimal request such as �
 - Dragging must always have a tap-based alternative because touch dragging can be awkward or inaccessible.
 - Keep A1 text short and literal. Avoid hiding the answer in labels such as “focus: WORD”.
 - Do not show the target answer before the learner responds unless the exercise is explicitly a reveal/flashcard exercise.
+- Randomise every unordered answer bank at runtime. Do not rely on the order written in `currentSession.ts`; correct answers must not acquire a predictable position across generated sessions.
+- `match` exercises are stricter: the meaning column must be a derangement of the Danish column whenever there is more than one pair, so no correct pair may appear on the same row by chance.
+- Sentence-order token banks, drag-gap options, choice/dialogue/listening options, odd-one-out items and category-sort item banks should all start shuffled unless their order itself is pedagogically meaningful.
 - Mix recognition and production. A session should not become only multiple choice.
 - Avoid repeatedly testing words already known well. Weak words should reappear through different exercise types and contexts.
 - Prefer realistic Danish someone living in Denmark could use.
