@@ -108,12 +108,21 @@ export type Exercise =
   | DialogueExercise
   | FlashRevealExercise
 
+export type SuggestedWord = {
+  danish: string
+  translation: string
+  example: string
+  exampleTranslation?: string
+  connectsTo?: string[]
+}
+
 export type PracticeSession = {
   id: string
   title: string
   subtitle: string
   level: string
   audioByWord?: Record<string, string>
+  suggestedWords?: SuggestedWord[]
   exercises: Exercise[]
 }
 
