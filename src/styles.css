@@ -22,6 +22,7 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; background: var(--bg); }
+html, body, #root { touch-action: pan-x pan-y; }
 body {
   margin: 0;
   min-width: 320px;
