@@ -1,3 +1,6 @@
+import { useMemo } from 'react'
+import { shuffleDifferent } from '../utils/shuffle'
+
 export function ChoiceGrid({
   options,
   selected,
@@ -11,9 +14,11 @@ export function ChoiceGrid({
   correct?: string
   onChoose: (value: string) => void
 }) {
+  const optionOrder = useMemo(() => shuffleDifferent(options), [options])
+
   return (
     <div className="choice-grid">
-      {options.map((option) => {
+      {optionOrder.map((option) => {
         const classes = ['choice-button']
         if (selected === option) classes.push('selected')
         if (disabled && correct === option) classes.push('correct')
