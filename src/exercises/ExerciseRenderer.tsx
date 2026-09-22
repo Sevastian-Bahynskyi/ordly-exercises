@@ -5,7 +5,6 @@ import { ChoiceExercise } from './ChoiceExercise'
 import { DialogueExercise } from './DialogueExercise'
 import { DragGapExercise } from './DragGapExercise'
 import { FlashRevealExercise } from './FlashRevealExercise'
-import { ListenChoiceExercise } from './ListenChoiceExercise'
 import { MatchExercise } from './MatchExercise'
 import { OddOneOutExercise } from './OddOneOutExercise'
 import { OrderExercise } from './OrderExercise'
@@ -35,7 +34,6 @@ export function ExerciseRenderer({
     case 'odd-one-out': return <OddOneOutExercise exercise={exercise} {...props} />
     case 'category-sort': return <CategorySortExercise exercise={exercise} {...props} />
     case 'dialogue': return <DialogueExercise exercise={exercise} {...props} />
-    case 'listen-choice': return <ListenChoiceExercise exercise={exercise} {...props} />
     case 'flash-reveal': return <FlashRevealExercise exercise={exercise} {...props} />
   }
 }
