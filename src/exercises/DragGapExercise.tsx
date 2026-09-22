@@ -2,6 +2,7 @@ import { DndContext, PointerSensor, useDraggable, useDroppable, useSensor, useSe
 import { CSS } from '@dnd-kit/utilities'
 import { ExerciseFrame } from '../components/ExerciseFrame'
 import { Feedback } from '../components/Feedback'
+import { GlossText } from '../components/GlossText'
 import type { DragGapExercise as T } from '../types'
 import type { ExerciseProps } from './common'
 
@@ -47,11 +48,11 @@ export function DragGapExercise({ exercise, draft, result, onDraftChange, onComp
     <ExerciseFrame badge="Drag & drop" title={exercise.title} instruction={exercise.instruction ?? 'Drag a word into the gap. You can also tap a word, then tap the gap.'}>
       <DndContext sensors={sensors} onDragEnd={onDragEnd}>
         <div className="gap-sentence">
-          <span>{exercise.before}</span>
+          <span><GlossText text={exercise.before} glosses={exercise.glosses} /></span>
           <button type="button" className="gap-button" disabled={result?.completed || !draft?.selected} onClick={() => draft?.selected && submit(draft.selected)}>
             <Gap selected={selected} active={!result?.completed} />
           </button>
-          <span>{exercise.after}</span>
+          <span><GlossText text={exercise.after} glosses={exercise.glosses} /></span>
         </div>
         <div className="token-bank">
           {exercise.options.map((option) => (
