@@ -38,6 +38,23 @@ When the user uploads a fresh Ordly export or asks for a practice session:
 - Give immediate, concise feedback.
 - For uncertain Danish grammar, pronunciation, idiom or frequency, verify using authoritative Danish sources rather than guessing.
 
+## Visual design
+
+The practice surface should feel native to modern iPhone and visually close to Apple's current design language without copying Apple branding.
+
+- Follow current Apple Human Interface Guidelines when changing shared UI.
+- Use the system font stack and strong typographic hierarchy.
+- Keep accent colour restrained; use it for progress, selection and status rather than flooding the whole interface.
+- Prefer clear content surfaces. Use translucent/glass treatment mainly for navigation and lightweight controls.
+- Use generous whitespace, subtle hairlines, soft depth and large rounded geometry.
+- Controls must feel familiar and remain at least ~44 CSS px on touch devices.
+- Motion should communicate state changes: short fades, small translations, press feedback and progress transitions. Avoid decorative bouncing, spinning, parallax or constant animation.
+- Always support `prefers-reduced-motion`.
+- Support iOS light and dark appearance.
+- Do not place branding above learning content or let visual decoration reduce room for the exercise itself.
+
+Shared styling lives in `src/styles.css`. A generated practice session should almost never need custom CSS.
+
 ## Architecture
 
 `src/session/currentSession.ts`
