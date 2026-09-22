@@ -1,4 +1,4 @@
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 
 function normalizeToken(token: string) {
   return token.toLocaleLowerCase('da-DK')
@@ -13,6 +13,13 @@ export function GlossText({
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const id = useId()
+
+  useEffect(() => {
+    if (openIndex === null) return
+    const close = () => setOpenIndex(null)
+    document.addEventListener('pointerdown', close)
+    return () => document.removeEventListener('pointerdown', close)
+  }, [openIndex])
 
   if (!glosses || Object.keys(glosses).length === 0) return <>{text}</>
 
